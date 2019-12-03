@@ -44,8 +44,18 @@ public class ConeGeneratorComponent : MonoBehaviour
     private Vector3[] GénérerSommets()
     {
         // Génère les différents sommets de la primitive utilisés tant pour la structure que pour l'application du matériau.
-
-        // à completer
+        vertices = new Vector3[nFaces + 2];
+        vertices[0] = Vector3.zero;
+        for (int i = 0, n = this.nFaces - 1; i < this.nFaces; i++)
+        {
+            float ratio = (float)i / n;
+            float r = ratio * (Mathf.PI * 2f);
+            float x = Mathf.Cos(r) * coneDimension.x;
+            float z = Mathf.Sin(r) * coneDimension.x;
+            vertices[i + 1] = new Vector3(x, 0f, z);
+        }
+        vertices[nFaces + 1] = new Vector3(0f, coneDimension.y, 0f);
+        return vertices;
     }
 
 
@@ -53,7 +63,30 @@ public class ConeGeneratorComponent : MonoBehaviour
     {
         // Génère un tableau contenant la définition de chacun des triangles composant la primitive. 
         // Chaque triangle est défini par trois valeurs,chacune de ces valeurs étant un indice du tableau Sommets.
+        // construct bottom
+        int[] triangles = new int[(nFaces * 2) * 3];
 
+        for (int i = 0, n = nFaces - 1; i < n; i++)
+        {
+            int offset = i * 3;
+            triangles[offset] = 0;
+            triangles[offset + 1] = i + 1;
+            triangles[offset + 2] = i + 2;
+        }
+
+        // construct sides
+
+        int bottomOffset = nFaces * 3;
+        for (int i = 0, n = nFaces - 1; i < n; i++)
+        {
+            int offset = i * 3 + bottomOffset;
+            triangles[offset] = i + 1;
+            triangles[offset + 1] = nFaces + 1;
+            triangles[offset + 2] = i + 2;
+        }
+
+
+        return triangles;
         // à completer
     }
 

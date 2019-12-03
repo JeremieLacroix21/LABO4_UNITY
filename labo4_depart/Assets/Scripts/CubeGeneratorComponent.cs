@@ -49,7 +49,7 @@ public class CubeGeneratorComponent : MonoBehaviour
     {
         // Génère un tableau contenant la définition de chacun des triangles composant la primitive. 
         // Chaque triangle est défini par trois valeurs,chacune de ces valeurs étant un indice du tableau Sommets.
-
+        
         // à completer
     }
 
